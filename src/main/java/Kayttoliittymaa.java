@@ -18,6 +18,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.control.ListView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 
 public class Kayttoliittymaa extends Application {
@@ -84,6 +87,9 @@ public class Kayttoliittymaa extends Application {
         varausVbox.setPrefHeight(650);
         varausVbox.setPrefWidth(650);
 
+        Label varausOtsikko = new Label("Tee varaus");
+        varausOtsikko.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+
         GridPane varausGrid = new GridPane();
         varausGrid.setHgap(15);
         varausGrid.setVgap(15);
@@ -125,7 +131,7 @@ public class Kayttoliittymaa extends Application {
         Button btnPeruuta1 = new Button("Peruuta");
         riviButtoneille1.getChildren().addAll(btnTallenna1, btnPeruuta1);
         riviButtoneille1.setAlignment(Pos.CENTER);
-        varausVbox.getChildren().addAll(varausGrid, riviButtoneille1);
+        varausVbox.getChildren().addAll(varausOtsikko, varausGrid, riviButtoneille1);
         paneeli.setCenter(varausVbox);
 
         //tapahtumankäsittelijä tallenna buttonille
@@ -144,26 +150,33 @@ public class Kayttoliittymaa extends Application {
         });
 
 
-
         //--------------------------------------------------------------------------------------------
         //MÖKIT -entiteetti
+        HBox mokkiPohja = new HBox();
+        mokkiPohja.setAlignment(Pos.CENTER);
+        mokkiPohja.setStyle("-fx-background-color: lightgray;");
+        mokkiPohja.setSpacing(50);
+        //mokkiPohja.setPadding(new Insets(30));
+        //mokkiPohja.setSpacing(20);
 
-        VBox mokkiVbox = new VBox();
-        mokkiVbox.setStyle("-fx-background-color: lightgray;");
-        mokkiVbox.setAlignment(Pos.CENTER);
-        mokkiVbox.setPadding(new Insets(30));
-        mokkiVbox.setSpacing(20);
+        //mokkiPohja.setMaxWidth(800);
+        //mokkiPohja.setMaxHeight(800);
+        //mokkiPohja.setPrefHeight(800);
+        //mokkiPohja.setPrefWidth(800);
 
-        mokkiVbox.setMaxWidth(650);
-        mokkiVbox.setMaxHeight(650);
-        mokkiVbox.setPrefHeight(650);
-        mokkiVbox.setPrefWidth(650);
+        VBox mokkiVbox = new VBox(20);
+        mokkiVbox.setAlignment(Pos.TOP_LEFT);
+        mokkiVbox.setPadding(new Insets(20));
+        mokkiVbox.setPrefWidth(500);
+
+        Label mokitOtsikko = new Label("Mökit");
+        mokitOtsikko.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
         GridPane mokkiGrid = new GridPane();
         mokkiGrid.setHgap(15);
         mokkiGrid.setVgap(15);
         mokkiGrid.setPadding(new Insets(20));
-        mokkiGrid.setAlignment(Pos.CENTER);
+        mokkiGrid.setAlignment(Pos.TOP_LEFT);
 
         mokkiGrid.add(new Label("ID:"), 0, 0);
         TextField mokkiIdKentta = new TextField();
@@ -185,16 +198,27 @@ public class Kayttoliittymaa extends Application {
         TextField osoiteIdKentta = new TextField();
         mokkiGrid.add(osoiteIdKentta, 3, 2);
 
-        mokkiVbox.setAlignment(Pos.CENTER);
 
         //tallenna ja peruuta -nappi
         HBox riviButtoneille2 = new HBox(30);
         Button btnTallenna2 = new Button("Tallenna");
         Button btnPeruuta2 = new Button("Peruuta");
         riviButtoneille2.getChildren().addAll(btnTallenna2, btnPeruuta2);
-        riviButtoneille2.setAlignment(Pos.CENTER);
-        mokkiVbox.getChildren().addAll(mokkiGrid, riviButtoneille2);
-        paneeli.setCenter(mokkiVbox);
+        riviButtoneille2.setAlignment(Pos.CENTER_LEFT);
+
+        mokkiVbox.getChildren().addAll(mokitOtsikko,mokkiGrid,riviButtoneille2);
+
+
+        ObservableList<String> mokit = FXCollections.observableArrayList("Mökki 1", "Mökki 2", "Mökki3");
+        ListView<String> mokkiLista = new ListView<>(mokit);
+        mokkiLista.setPrefHeight(400);
+        mokkiLista.setPrefWidth(200);
+        mokkiLista.setStyle("-fx-background-color: white; -fx-border-color: gray;");
+
+        mokkiPohja.getChildren().addAll(mokkiVbox, mokkiLista);
+
+        paneeli.setCenter(mokkiPohja);
+
 
         //tapahtumankäsittelijä tallenna buttonille
         btnTallenna2.setOnAction(ActionEvent -> {
@@ -211,7 +235,6 @@ public class Kayttoliittymaa extends Application {
         });
 
 
-
         //------------------------------------------------------------------------------------------
         //ASIAKAS -entiteetti
 
@@ -225,6 +248,9 @@ public class Kayttoliittymaa extends Application {
         asiakasVbox.setMaxHeight(650);
         asiakasVbox.setPrefHeight(650);
         asiakasVbox.setPrefWidth(650);
+
+        Label asiakasOtsikko = new Label("Asiakas");
+        asiakasOtsikko.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
         GridPane asiakasGrid = new GridPane();
         asiakasGrid.setHgap(15);
@@ -266,7 +292,7 @@ public class Kayttoliittymaa extends Application {
         Button btnPeruuta3 = new Button("Peruuta");
         riviButtoneille3.getChildren().addAll(btnTallenna3, btnPeruuta3);
         riviButtoneille3.setAlignment(Pos.CENTER);
-        asiakasVbox.getChildren().addAll(asiakasGrid, riviButtoneille3);
+        asiakasVbox.getChildren().addAll(asiakasOtsikko, asiakasGrid, riviButtoneille3);
         paneeli.setCenter(asiakasVbox);
 
         //tapahtumankäsittelijä tallenna buttonille
@@ -300,9 +326,12 @@ public class Kayttoliittymaa extends Application {
         laskuVbox.setPrefHeight(650);
         laskuVbox.setPrefWidth(650);
 
+        Label laskuOtsikko = new Label("Laskut");
+        laskuOtsikko.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+
         GridPane laskuGrid = new GridPane();
-        laskuGrid.setHgap(15);
-        laskuGrid.setVgap(15);
+        laskuGrid.setHgap(20);
+        laskuGrid.setVgap(20);
         laskuGrid.setPadding(new Insets(20));
         laskuGrid.setAlignment(Pos.CENTER);
 
@@ -344,7 +373,7 @@ public class Kayttoliittymaa extends Application {
         Button btnPeruuta4 = new Button("Peruuta");
         riviButtoneille4.getChildren().addAll(btnTallenna4, btnPeruuta4);
         riviButtoneille4.setAlignment(Pos.CENTER);
-        laskuVbox.getChildren().addAll(laskuGrid, riviButtoneille4);
+        laskuVbox.getChildren().addAll(laskuOtsikko,laskuGrid, riviButtoneille4);
         paneeli.setCenter(laskuVbox);
 
         //tapahtumankäsittelijä tallenna buttonille
@@ -369,10 +398,6 @@ public class Kayttoliittymaa extends Application {
         //MAJOITUKSEN RAPORTOINTI -entiteetti
 
 
-
-
-
-
         //----------------------------------------------------------------------------------------
         //vaihdetaan näkymiä menubarista klikkaamalla
         menuVaraus.setOnAction(e -> {
@@ -392,13 +417,13 @@ public class Kayttoliittymaa extends Application {
         //Mitä tähän keksisi?
         paneeli.setCenter(null);
 
-        Scene scene = new Scene(paneeli, 800, 700);
+        Scene scene = new Scene(paneeli, 1100, 750);
         primarystage.setTitle("Mökkien varaaminen");
         primarystage.setScene(scene);
         primarystage.show();
     }
+
     public static void main(String[] args) {
         launch(args);
     }
 }
-
